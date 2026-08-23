@@ -1,0 +1,1 @@
+curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "287311760", "text": "This is a test from test notifications bot", "disable_notification": true}'   https://api.telegram.org/bot8828675208:AAGKOf_N7GufUYyjU_8SOkTQkeoMmj99DL8/sendMessage
