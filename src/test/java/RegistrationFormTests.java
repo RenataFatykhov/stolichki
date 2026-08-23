@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.RegistrationFormPage;
+import testdata.TestData;
 
 public class RegistrationFormTests extends TestBase {
 
@@ -20,14 +21,15 @@ public class RegistrationFormTests extends TestBase {
     @Test
     @DisplayName("Ввод неверного кода подтверждения")
     public void sendWrongVerifyCode() {
+        TestData data = new TestData();
         registrationFormPage
                 .openPage()
                 .preparePage()
                 .openRegisterForm()
-                .typePhoneNumber("9172403384")
+                .typePhoneNumber(data.phoneNumber)
                 .sendAuthCode()
                 .checkEntryCodeText()
-                .typeEntryCodeText("1234")
+                .typeEntryCodeText(data.verifyCode)
                 .checkInvalidEntryCodeMessage();
     }
 
@@ -47,29 +49,31 @@ public class RegistrationFormTests extends TestBase {
     @Test
     @DisplayName("Отправка невалидного телефона или email через кнопку")
     public void sendInvalidLoginlWithSubmitButtonTest() {
+        TestData data = new TestData();
         registrationFormPage
                 .openPage()
                 .preparePage()
                 .openRegisterForm()
                 .openAuthOldModal()
                 .checkCorrectMessageInOldModal()
-                .typeWrongLogin("test_wrong_email")
-                .typeAuthPassword("123456")
-                .clickSubmitBtn().checkErrorMessageInOldModalInvalidLogin();
+                .typeWrongLogin(data.wrongLogin)
+                .typeAuthPassword(data.wrongPassword)
+                .clickSubmitBtn()
+                .checkErrorMessageInOldModalInvalidLogin();
     }
 
     @Test
     @DisplayName("Отправка невалидного телефона или email через клавишу Enter")
     public void sendInvalidPhoneOrEmailWithEnterTest() {
+        TestData data = new TestData();
         registrationFormPage
                 .openPage()
                 .preparePage()
                 .openRegisterForm()
                 .openAuthOldModal()
                 .checkCorrectMessageInOldModal()
-                .typeWrongLogin("test_wrong_email")
-                .typeAuthPasswordWithEnter("123456")
-                .clickSubmitBtn().checkErrorMessageInOldModalInvalidLogin();
+                .typeWrongLogin(data.wrongLogin)
+                .typeAuthPasswordWithEnter(data.wrongPassword);
     }
 
     @Test
