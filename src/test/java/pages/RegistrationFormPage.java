@@ -2,6 +2,7 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
+import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Condition.text;
@@ -27,12 +28,13 @@ public class RegistrationFormPage {
     private final SelenideElement pageRules = $(byText("правилами сайта"));
     private final SelenideElement listPageRules = $(".t-h1");
 
-
+    @Step("Открыть страницу")
     public RegistrationFormPage openPage() {
         open("");
         return this;
     }
 
+    @Step("Подготовить страницу")
     public RegistrationFormPage preparePage() {
         executeJavaScript("window.stop();");
         executeJavaScript("""
@@ -43,100 +45,120 @@ public class RegistrationFormPage {
         return this;
     }
 
-    public RegistrationFormPage openRegisterForm() {
+    @Step("Открыть модальное окно авторизации")
+    public RegistrationFormPage openRegistrationForm() {
         authModal.click();
         return this;
     }
 
+    @Step("Отправить код подтверждения")
     public RegistrationFormPage sendAuthCode() {
         sendCodeBtn.click();
         return this;
     }
 
-    public RegistrationFormPage checkEmptyErrorMessage() {
-        popUpModal.shouldHave(text(ERROR_EMPTY_PHONE));
+    @Step("Проверка наличия подсказки \"{expectedText}\"")
+    public RegistrationFormPage checkEmptyErrorMessage(String expectedText) {
+        popUpModal.shouldHave(text(expectedText));
         return this;
     }
 
+    @Step("Ввод номера телефона")
     public RegistrationFormPage typePhoneNumber(String value) {
         phoneInput.setValue(value);
         return this;
     }
 
-    public RegistrationFormPage checkEntryCodeText() {
-        entryCodeText.shouldHave(text(SMS_SENT));
+    @Step("Проверка SMS сообщения: \"{expectedText}\"")
+    public RegistrationFormPage checkEntryCodeText(String expectedText) {
+        entryCodeText.shouldHave(text(expectedText));
         return this;
     }
 
+    @Step("Ввод кода подтверждения")
     public RegistrationFormPage typeEntryCodeText(String value) {
         authCodeInput.setValue(value);
         return this;
     }
 
-    public RegistrationFormPage checkInvalidEntryCodeMessage() {
-        authCodeInvalid.shouldHave(text(ERROR_INVALID_CODE));
+
+    @Step("Проверка сообщения об ошибке: \"{expectedText}\"")
+    public RegistrationFormPage checkInvalidEntryCodeMessage(String expectedText) {
+        authCodeInvalid.shouldHave(text(expectedText));
         return this;
     }
 
+    @Step("Открыть модальное окно регистрации через логин")
     public RegistrationFormPage openAuthOldModal() {
         authOldModal.click();
         return this;
     }
 
-    public RegistrationFormPage checkCorrectMessageInOldModal() {
-        popLoginForm.shouldHave(text(OLD_MODAL_TITLE));
+    @Step("Проверка сообщения в модалке: \"{expectedText}\"")
+    public RegistrationFormPage checkCorrectMessageInOldModal(String expectedText) {
+        popLoginForm.shouldHave(text(expectedText));
         return this;
     }
 
+    @Step("Клик по кнопке подтверждения")
     public RegistrationFormPage clickSubmitBtn() {
         submitBtn.click();
         return this;
     }
 
-    public RegistrationFormPage checkErrorMessageInOldModal() {
-        popLoginForm.shouldHave(text(ERROR_EMPTY_LOGIN));
+    @Step("Проверка пустого поля логина: \"{expectedText}\"")
+    public RegistrationFormPage checkErrorMessageInOldModal(String expectedText) {
+        popLoginForm.shouldHave(text(expectedText));
         return this;
     }
 
-    public RegistrationFormPage checkErrorMessageInOldModalInvalidLogin() {
-        popLoginForm.shouldHave(text(ERROR_INVALID_LOGIN));
+    @Step("Проверка неверного логина: \"{expectedText}\"")
+    public RegistrationFormPage checkErrorMessageInOldModalInvalidLogin(String expectedText) {
+        popLoginForm.shouldHave(text(expectedText));
         return this;
     }
 
+    @Step("Ввод неверного логина")
     public RegistrationFormPage typeWrongLogin(String value) {
         loginInput.setValue(value);
         return this;
     }
 
+    @Step("Ввод пароля")
     public RegistrationFormPage typeAuthPassword(String value) {
         passwordInput.setValue(value);
         return this;
     }
 
+    @Step("Ввод пароля и подтверждение введенных данных")
     public RegistrationFormPage typeAuthPasswordWithEnter(String value) {
         passwordInput.setValue(value).pressEnter();
         return this;
     }
 
+    @Step("Наличие ссылки на правила сайта")
     public RegistrationFormPage checkPageRulesUrl(String name, String value) {
         pageRules.shouldHave(attribute(name, value));
         return this;
     }
 
+    @Step("Открытие ссылки на правила сайта")
     public RegistrationFormPage openPageRulesUrl() {
         pageRules.click();
         return this;
     }
 
-    public RegistrationFormPage checkPageRulesOpen() {
+    @Step("Открытие ссылки на соседней странице с \"{expectedText}\"")
+    public RegistrationFormPage checkPageRulesOpen(String expectedText) {
         switchTo().window(1);
         String currentUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
-        assertEquals(PAGE_RULES_FULL_URL, currentUrl);
+        assertEquals(expectedText, currentUrl);
         return this;
     }
 
-    public RegistrationFormPage checkPageRulesContent() {
-        listPageRules.shouldHave(text(PAGE_RULES_TITLE));
+    @Step("Наличие заголовка у правил \"{expectedText}\"")
+    public RegistrationFormPage checkPageRulesContent(String expectedText) {
+        listPageRules.shouldHave(text(expectedText));
         return this;
     }
 }
