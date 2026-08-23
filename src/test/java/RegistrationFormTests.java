@@ -3,6 +3,8 @@ import org.junit.jupiter.api.Test;
 import pages.RegistrationFormPage;
 import testdata.TestData;
 
+import static testdata.TestData.PAGE_RULES_URL;
+
 public class RegistrationFormTests extends TestBase {
 
     RegistrationFormPage registrationFormPage = new RegistrationFormPage();
@@ -83,10 +85,12 @@ public class RegistrationFormTests extends TestBase {
                 .openPage()
                 .preparePage()
                 .openRegisterForm()
-                .checkPageRulesUrl();
+                .checkPageRulesUrl(
+                        "href",
+                        PAGE_RULES_URL
+                );
 
     }
-
 
     @Test
     @DisplayName("Открыть правила сайта")
@@ -95,7 +99,10 @@ public class RegistrationFormTests extends TestBase {
                 .openPage()
                 .preparePage()
                 .openRegisterForm()
-                .checkPageRulesUrl()
+                .checkPageRulesUrl(
+                        "href",
+                        PAGE_RULES_URL
+                )
                 .openPageRulesUrl()
                 .checkPageRulesOpen()
                 .checkPageRulesContent();

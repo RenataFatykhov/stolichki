@@ -8,6 +8,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static testdata.TestData.*;
 
 public class RegistrationFormPage {
 
@@ -53,7 +54,7 @@ public class RegistrationFormPage {
     }
 
     public RegistrationFormPage checkEmptyErrorMessage() {
-        popUpModal.shouldHave(text("Введите номер телефона"));
+        popUpModal.shouldHave(text(ERROR_EMPTY_PHONE));
         return this;
     }
 
@@ -63,7 +64,7 @@ public class RegistrationFormPage {
     }
 
     public RegistrationFormPage checkEntryCodeText() {
-        entryCodeText.shouldHave(text("На Ваш номер телефона выслан sms-код для подтверждения входа."));
+        entryCodeText.shouldHave(text(SMS_SENT));
         return this;
     }
 
@@ -73,7 +74,7 @@ public class RegistrationFormPage {
     }
 
     public RegistrationFormPage checkInvalidEntryCodeMessage() {
-        authCodeInvalid.shouldHave(text("Указан неверный код"));
+        authCodeInvalid.shouldHave(text(ERROR_INVALID_CODE));
         return this;
     }
 
@@ -83,7 +84,7 @@ public class RegistrationFormPage {
     }
 
     public RegistrationFormPage checkCorrectMessageInOldModal() {
-        popLoginForm.shouldHave(text("Мобильный телефон или Email"));
+        popLoginForm.shouldHave(text(OLD_MODAL_TITLE));
         return this;
     }
 
@@ -93,12 +94,12 @@ public class RegistrationFormPage {
     }
 
     public RegistrationFormPage checkErrorMessageInOldModal() {
-        popLoginForm.shouldHave(text("Введите мобильный телефон или email"));
+        popLoginForm.shouldHave(text(ERROR_EMPTY_LOGIN));
         return this;
     }
 
     public RegistrationFormPage checkErrorMessageInOldModalInvalidLogin() {
-        popLoginForm.shouldHave(text("Неверный мобильный телефон или email"));
+        popLoginForm.shouldHave(text(ERROR_INVALID_LOGIN));
         return this;
     }
 
@@ -117,8 +118,8 @@ public class RegistrationFormPage {
         return this;
     }
 
-    public RegistrationFormPage checkPageRulesUrl() {
-        pageRules.shouldHave(attribute("href", "/site_rules"));
+    public RegistrationFormPage checkPageRulesUrl(String name, String value) {
+        pageRules.shouldHave(attribute(name, value));
         return this;
     }
 
@@ -130,12 +131,12 @@ public class RegistrationFormPage {
     public RegistrationFormPage checkPageRulesOpen() {
         switchTo().window(1);
         String currentUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
-        assertEquals("https://stolichki.ru/site_rules", currentUrl);
+        assertEquals(PAGE_RULES_FULL_URL, currentUrl);
         return this;
     }
 
     public RegistrationFormPage checkPageRulesContent() {
-        listPageRules.shouldHave(text("Правила сайта и приложений Столички"));
+        listPageRules.shouldHave(text(PAGE_RULES_TITLE));
         return this;
     }
 }
