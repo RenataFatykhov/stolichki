@@ -16,10 +16,17 @@ public class TestBase {
     static void setUp() {
 
         Configuration.browser = System.getProperty("browser", "chrome");
-        Configuration.browserVersion = System.getProperty("browserVersion", "148.0");
-        Configuration.browserSize = System.getProperty("browserSize");
-        Configuration.baseUrl = System.getProperty("baseUrl");
+        Configuration.browserSize = System.getProperty("browserSize", "1920x1080");
+        Configuration.baseUrl = System.getProperty("baseUrl", "https://www.tutu.ru");
         Configuration.remote = System.getProperty("remote");
+        Configuration.timeout = 10000;
+        Configuration.pageLoadTimeout = 30000;
+        Configuration.pageLoadStrategy = "eager";
+
+        String browserVersion = System.getProperty("browserVersion");
+        if (browserVersion != null && !browserVersion.isBlank()) {
+            Configuration.browserVersion = browserVersion;
+        }
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
