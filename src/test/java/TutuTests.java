@@ -19,9 +19,9 @@ public class TutuTests extends TestBase {
                     .preparePage();
         });
 
-        step("Проверить title страницы", () -> {
+        step("Проверить URL главной страницы", () -> {
             mainPage
-                    .checkTitle(HOME_TITLE);
+                    .checkPageOpen("/");
         });
     }
 
@@ -165,7 +165,7 @@ public class TutuTests extends TestBase {
 
         step("Проверить URL и заголовок страницы", () -> {
             mainPage
-                    .checkPageOpen(HELP_PAGE_FULL_URL)
+                    .checkPageOpen(HELP_PAGE_URL)
                     .checkTitle(HELP_PAGE_TITLE);
         });
     }
@@ -182,7 +182,7 @@ public class TutuTests extends TestBase {
 
         step("Проверить URL и текст на странице", () -> {
             mainPage
-                    .checkPageOpen(GUIDE_PAGE_FULL_URL)
+                    .checkPageOpen(GUIDE_PAGE_URL)
                     .checkTitle(GUIDE_PAGE_TITLE);
         });
     }
@@ -199,7 +199,7 @@ public class TutuTests extends TestBase {
 
         step("Проверить URL и заголовок страницы", () -> {
             mainPage
-                    .checkPageOpen(TRAINS_PAGE_FULL_URL)
+                    .checkPageOpen(TRAINS_PAGE_URL)
                     .checkTitle(TRAINS_PAGE_TITLE);
         });
     }

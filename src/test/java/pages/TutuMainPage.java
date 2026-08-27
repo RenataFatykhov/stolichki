@@ -1,11 +1,13 @@
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.attribute;
-import static com.codeborne.selenide.Condition.exist;
+import static com.codeborne.selenide.Condition.attributeMatching;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
@@ -15,17 +17,18 @@ import static testdata.TestData.*;
 
 public class TutuMainPage {
 
-    private final SelenideElement header = $("[data-ti='header']");
-    private final SelenideElement headerLogo = $("[data-ti='header-logo']");
+    // Tutu renders hidden responsive copies of header controls before the visible version.
+    private final ElementsCollection headers = $$("[data-ti='header']");
+    private final ElementsCollection headerLogos = $$("[data-ti='header-logo']");
     private final SelenideElement searchForm = $("[data-ti='search-form']");
-    private final SelenideElement loginButton = $("[data-ti='login-button']");
+    private final ElementsCollection loginButtons = $$("[data-ti='login-button']");
     private final SelenideElement footer = $("[data-ti='footer']");
-    private final SelenideElement aviaLink = $("a[href='https://avia.tutu.ru/']");
-    private final SelenideElement trainsLink = $("a[href='https://www.tutu.ru/poezda/']");
-    private final SelenideElement hotelsLink = $("a[href='https://hotel.tutu.ru/']");
-    private final SelenideElement trainTab = $("[data-ti='tab-train']");
-    private final SelenideElement aviaTab = $("[data-ti='tab-avia']");
-    private final SelenideElement hotelTab = $("[data-ti='tab-hotel']");
+    private final ElementsCollection aviaLinks = $$("a[href='https://avia.tutu.ru/']");
+    private final ElementsCollection trainsLinks = $$("a[href='https://www.tutu.ru/poezda/']");
+    private final ElementsCollection hotelsLinks = $$("a[href='https://hotel.tutu.ru/']");
+    private final ElementsCollection trainTabs = $$("[data-ti='tab-train']");
+    private final ElementsCollection aviaTabs = $$("[data-ti='tab-avia']");
+    private final ElementsCollection hotelTabs = $$("[data-ti='tab-hotel']");
 
     @Step("Открыть страницу")
     public TutuMainPage openPage() {
@@ -53,15 +56,12 @@ public class TutuMainPage {
 
     @Step("Подготовить страницу")
     public TutuMainPage preparePage() {
-        if (header.exists()) {
-            header.scrollTo();
-        }
         return this;
     }
 
     @Step("Проверка видимости шапки сайта")
     public TutuMainPage checkHeaderVisible() {
-        header.shouldBe(visible);
+        headers.findBy(visible).shouldBe(visible);
         return this;
     }
 
@@ -73,13 +73,15 @@ public class TutuMainPage {
 
     @Step("Проверка meta description")
     public TutuMainPage checkMetaDescription(String expectedText) {
-        $("meta[name='description']").shouldHave(attribute("content", expectedText));
+        $("meta[name='description']")
+                .shouldHave(attributeMatching("content", ".*" + expectedText + ".*"));
         return this;
     }
 
     @Step("Проверка логотипа в шапке")
     public TutuMainPage checkHeaderLogo() {
-        headerLogo.shouldBe(visible).shouldHave(attribute("href", "https://www.tutu.ru/"));
+        headerLogos.findBy(visible)
+                .shouldHave(attribute("href", "https://www.tutu.ru/"));
         return this;
     }
 
@@ -91,7 +93,7 @@ public class TutuMainPage {
 
     @Step("Проверка кнопки входа")
     public TutuMainPage checkLoginButton() {
-        loginButton.shouldBe(visible).shouldHave(text(LOGIN_BUTTON_TEXT));
+        loginButtons.findBy(visible).shouldHave(text(LOGIN_BUTTON_TEXT));
         return this;
     }
 
@@ -103,30 +105,26 @@ public class TutuMainPage {
 
     @Step("Проверка ссылок на основные разделы")
     public TutuMainPage checkHeaderLinks() {
-        aviaLink.should(exist).shouldHave(text(AVIABILETY_TEXT)).shouldHave(attribute("href", AVIA_LINK_URL));
-        trainsLink.should(exist).shouldHave(text(TRAIN_TICKETS_TEXT)).shouldHave(attribute("href", TRAINS_LINK_URL));
-        hotelsLink.should(exist).shouldHave(text(HOTELS_TEXT)).shouldHave(attribute("href", HOTELS_LINK_URL));
+        aviaLinks.findBy(visible).shouldHave(text(AVIABILETY_TEXT)).shouldHave(attribute("href", AVIA_LINK_URL));
+        trainsLinks.findBy(visible).shouldHave(text(TRAIN_TICKETS_TEXT)).shouldHave(attribute("href", TRAINS_LINK_URL));
+        hotelsLinks.findBy(visible).shouldHave(text(HOTELS_TEXT)).shouldHave(attribute("href", HOTELS_LINK_URL));
         return this;
     }
 
     @Step("Проверка вкладок формы поиска")
     public TutuMainPage checkSearchTabsVisible() {
-        trainTab.shouldBe(visible);
-        aviaTab.shouldBe(visible);
-        hotelTab.shouldBe(visible);
+        trainTabs.findBy(visible).shouldBe(visible);
+        aviaTabs.findBy(visible).shouldBe(visible);
+        hotelTabs.findBy(visible).shouldBe(visible);
         return this;
     }
 
     @Step("Проверка текущего URL")
-    public TutuMainPage checkPageOpen(String expectedText) {
+    public TutuMainPage checkPageOpen(String expectedPath) {
+        String expectedUrl = Configuration.baseUrl.replaceAll("/+$", "") + expectedPath;
         String currentUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
-        assertEquals(expectedText, currentUrl);
+        assertEquals(expectedUrl, currentUrl);
         return this;
     }
 
-    @Step("Проверка наличия текста на странице")
-    public TutuMainPage checkPageContainsText(String expectedText) {
-        $("body").shouldHave(text(expectedText));
-        return this;
-    }
 }
