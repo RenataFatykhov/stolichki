@@ -1,28 +1,17 @@
 package testdata;
 
 import com.codeborne.selenide.Configuration;
-import com.github.javafaker.Faker;
-
-import static utils.RandomUtils.generatePhoneNumber;
-import static utils.RandomUtils.generateVerifyCode;
 
 public class TestData {
-    private final Faker faker = new Faker();
-
-    // Тестовые данные
-    public String phoneNumber = generatePhoneNumber(10);
-    public String verifyCode = generateVerifyCode(4);
-    public String wrongLogin = faker.lorem().characters(5);
-    public String wrongPassword = faker.lorem().characters(5);
-
-
-    // Тексты ошибок и сообщений
-    public static final String ERROR_EMPTY_PHONE = "Введите номер телефона";
-    public static final String SMS_SENT = "На Ваш номер телефона выслан sms-код для подтверждения входа.";
-    public static final String ERROR_INVALID_CODE = "Указан неверный код";
-    public static final String OLD_MODAL_TITLE = "Мобильный телефон или Email";
-    public static final String ERROR_EMPTY_LOGIN = "Введите мобильный телефон или email";
-    public static final String ERROR_INVALID_LOGIN = "Неверный мобильный телефон или email";
+    // Тексты и ссылки для smoke-проверок без авторизации
+    public static final String HOME_TITLE = "Столички";
+    public static final String META_DESCRIPTION = "Большой выбор лекарственных средств";
+    public static final String SEARCH_PLACEHOLDER = "Поиск лекарств";
+    public static final String LOYALTY_LINK_TEXT = "Программа лояльности";
+    public static final String PHARMACIES_TEXT = "Аптеки";
+    public static final String CATALOG_TEXT = "Каталог";
+    public static final String HOTLINE_PHONE = "+7 (495) 215-52-15";
+    public static final String FEEDBACK_SITE_URL = "/feedback/site";
     public static final String PAGE_RULES_TITLE = "Правила сайта и приложений Столички";
     public static final String PAGE_RULES_URL = "/site_rules";
     public static final String PAGE_RULES_FULL_URL = Configuration.baseUrl + PAGE_RULES_URL;

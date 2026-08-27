@@ -5,28 +5,23 @@ import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.attribute;
+import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static testdata.TestData.*;
 
 public class RegistrationFormPage {
 
-    private final SelenideElement authModal = $("[data-click='openAuthModal']");
-    private final SelenideElement sendCodeBtn = $("#auth__send-code-btn");
-    private final SelenideElement popUpModal = $(".pop.pop-auth.fancybox-content");
-    private final SelenideElement phoneInput = $("#auth__phone");
-    private final SelenideElement entryCodeText = $("#entry__code-text");
-    private final SelenideElement authCodeInput = $(".pop-auth__code-inputs");
-    private final SelenideElement authCodeInvalid = $("#auth__login-code-error");
-    private final SelenideElement authOldModal = $("#auth__old-auth-btn");
-    private final SelenideElement popLoginForm = $(".pop-login-form");
-    private final SelenideElement submitBtn = $("[data-click='doAuth']");
-    private final SelenideElement loginInput = $("#auth__login");
-    private final SelenideElement passwordInput = $("#auth__password");
-    private final SelenideElement pageRules = $(byText("правилами сайта"));
-    private final SelenideElement listPageRules = $(".t-h1");
+    private final SelenideElement header = $("header.hdr");
+    private final SelenideElement searchInput = $("input.products-search__input");
+    private final SelenideElement loyaltyLink = $("a[href='/loyalty']");
+    private final SelenideElement pageRules = $("a[href='/site_rules']");
+    private final SelenideElement siteRulesTitle = $(".t-h1");
+    private final SelenideElement hotlinePhone = $("a[href='tel:+74952155215']");
+    private final SelenideElement feedbackSiteLink = $("a[href='/feedback/site']");
 
     @Step("Открыть страницу")
     public RegistrationFormPage openPage() {
@@ -34,131 +29,89 @@ public class RegistrationFormPage {
         return this;
     }
 
+    @Step("Открыть страницу правил сайта")
+    public RegistrationFormPage openSiteRulesPage() {
+        open(PAGE_RULES_URL);
+        return this;
+    }
+
     @Step("Подготовить страницу")
     public RegistrationFormPage preparePage() {
-        executeJavaScript("window.stop();");
-        executeJavaScript("""
-                document.getElementById('fixedban')?.remove();
-                document.querySelector('footer')?.remove();
-                document.querySelectorAll('[class*="ad"], [class*="banner"], iframe').forEach(el => el.remove());
-                """);
+        SelenideElement cityConfirmButton = $$("[data-tip-pop-close]").findBy(text("Да, верно"));
+        if (cityConfirmButton.exists()) {
+            cityConfirmButton.click();
+        }
+        SelenideElement appHintCloseButton = $("button[data-close-btn]");
+        if (appHintCloseButton.exists()) {
+            appHintCloseButton.click();
+        }
         return this;
     }
 
-    @Step("Открыть модальное окно авторизации")
-    public RegistrationFormPage openRegistrationForm() {
-        authModal.click();
+    @Step("Проверка видимости шапки сайта")
+    public RegistrationFormPage checkHeaderVisible() {
+        header.shouldBe(visible);
         return this;
     }
 
-    @Step("Отправить код подтверждения")
-    public RegistrationFormPage sendAuthCode() {
-        sendCodeBtn.click();
+    @Step("Проверка заголовка страницы")
+    public RegistrationFormPage checkTitle(String expectedText) {
+        assertTrue(title().contains(expectedText));
         return this;
     }
 
-    @Step("Проверка наличия подсказки \"{expectedText}\"")
-    public RegistrationFormPage checkEmptyErrorMessage(String expectedText) {
-        popUpModal.shouldHave(text(expectedText));
+    @Step("Проверка meta description")
+    public RegistrationFormPage checkMetaDescription(String expectedText) {
+        $("meta[name='description']").shouldHave(attribute("content", expectedText));
         return this;
     }
 
-    @Step("Ввод номера телефона")
-    public RegistrationFormPage typePhoneNumber(String value) {
-        phoneInput.setValue(value);
+    @Step("Проверка поля поиска")
+    public RegistrationFormPage checkSearchPlaceholder(String expectedText) {
+        searchInput.shouldBe(visible).shouldHave(attribute("placeholder", expectedText));
         return this;
     }
 
-    @Step("Проверка SMS сообщения: \"{expectedText}\"")
-    public RegistrationFormPage checkEntryCodeText(String expectedText) {
-        entryCodeText.shouldHave(text(expectedText));
+    @Step("Проверка текста в шапке")
+    public RegistrationFormPage checkHeaderContainsText(String expectedText) {
+        header.shouldHave(text(expectedText));
         return this;
     }
 
-    @Step("Ввод кода подтверждения")
-    public RegistrationFormPage typeEntryCodeText(String value) {
-        authCodeInput.setValue(value);
+    @Step("Проверка ссылки программы лояльности")
+    public RegistrationFormPage checkLoyaltyLink() {
+        loyaltyLink.shouldBe(visible).shouldHave(text(LOYALTY_LINK_TEXT));
         return this;
     }
 
-
-    @Step("Проверка сообщения об ошибке: \"{expectedText}\"")
-    public RegistrationFormPage checkInvalidEntryCodeMessage(String expectedText) {
-        authCodeInvalid.shouldHave(text(expectedText));
-        return this;
-    }
-
-    @Step("Открыть модальное окно регистрации через логин")
-    public RegistrationFormPage openAuthOldModal() {
-        authOldModal.click();
-        return this;
-    }
-
-    @Step("Проверка сообщения в модалке: \"{expectedText}\"")
-    public RegistrationFormPage checkCorrectMessageInOldModal(String expectedText) {
-        popLoginForm.shouldHave(text(expectedText));
-        return this;
-    }
-
-    @Step("Клик по кнопке подтверждения")
-    public RegistrationFormPage clickSubmitBtn() {
-        submitBtn.click();
-        return this;
-    }
-
-    @Step("Проверка пустого поля логина: \"{expectedText}\"")
-    public RegistrationFormPage checkErrorMessageInOldModal(String expectedText) {
-        popLoginForm.shouldHave(text(expectedText));
-        return this;
-    }
-
-    @Step("Проверка неверного логина: \"{expectedText}\"")
-    public RegistrationFormPage checkErrorMessageInOldModalInvalidLogin(String expectedText) {
-        popLoginForm.shouldHave(text(expectedText));
-        return this;
-    }
-
-    @Step("Ввод неверного логина")
-    public RegistrationFormPage typeWrongLogin(String value) {
-        loginInput.setValue(value);
-        return this;
-    }
-
-    @Step("Ввод пароля")
-    public RegistrationFormPage typeAuthPassword(String value) {
-        passwordInput.setValue(value);
-        return this;
-    }
-
-    @Step("Ввод пароля и подтверждение введенных данных")
-    public RegistrationFormPage typeAuthPasswordWithEnter(String value) {
-        passwordInput.setValue(value).pressEnter();
-        return this;
-    }
-
-    @Step("Наличие ссылки на правила сайта")
+    @Step("Проверка ссылки на правила сайта")
     public RegistrationFormPage checkPageRulesUrl(String name, String value) {
-        pageRules.shouldHave(attribute(name, value));
+        pageRules.should(exist).shouldHave(attribute(name, value));
         return this;
     }
 
-    @Step("Открытие ссылки на правила сайта")
-    public RegistrationFormPage openPageRulesUrl() {
-        pageRules.click();
+    @Step("Проверка телефона горячей линии")
+    public RegistrationFormPage checkHotlinePhone() {
+        hotlinePhone.shouldBe(visible).shouldHave(text(HOTLINE_PHONE));
         return this;
     }
 
-    @Step("Открытие ссылки на соседней странице с \"{expectedText}\"")
+    @Step("Проверка ссылки обратной связи по сайту")
+    public RegistrationFormPage checkFeedbackSiteLink() {
+        feedbackSiteLink.should(exist).shouldHave(attribute("href", FEEDBACK_SITE_URL));
+        return this;
+    }
+
+    @Step("Проверка открытия страницы правил сайта")
     public RegistrationFormPage checkPageRulesOpen(String expectedText) {
-        switchTo().window(1);
         String currentUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
         assertEquals(expectedText, currentUrl);
         return this;
     }
 
-    @Step("Наличие заголовка у правил \"{expectedText}\"")
+    @Step("Проверка заголовка правил сайта")
     public RegistrationFormPage checkPageRulesContent(String expectedText) {
-        listPageRules.shouldHave(text(expectedText));
+        siteRulesTitle.shouldHave(text(expectedText));
         return this;
     }
 }

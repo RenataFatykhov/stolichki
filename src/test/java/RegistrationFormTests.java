@@ -1,7 +1,6 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.RegistrationFormPage;
-import testdata.TestData;
 
 import static com.codeborne.selenide.logevents.SelenideLogger.step;
 import static testdata.TestData.*;
@@ -11,133 +10,131 @@ public class RegistrationFormTests extends TestBase {
     RegistrationFormPage registrationFormPage = new RegistrationFormPage();
 
     @Test
-    @DisplayName("Отправка пустой формы с телефоном")
-    public void sendEmptyRegistrationFormWithPhoneTest() {
+    @DisplayName("Открывается главная страница")
+    public void openHomePageTest() {
 
-        step("Открыть страницу регистрации", () -> {
+        step("Открыть главную страницу", () -> {
             registrationFormPage
                     .openPage()
                     .preparePage();
         });
 
-        step("Работа с формой регистрации", () -> {
+        step("Проверить title страницы", () -> {
             registrationFormPage
-                    .openRegistrationForm()
-                    .sendAuthCode();
-        });
-
-        step("Проверка наличия текста-подсказки", () -> {
-            registrationFormPage
-                    .checkEmptyErrorMessage(ERROR_EMPTY_PHONE);
+                    .checkTitle(HOME_TITLE);
         });
     }
 
     @Test
-    @DisplayName("Ввод неверного кода подтверждения")
-    public void sendWrongVerifyCode() {
-        TestData data = new TestData();
+    @DisplayName("На главной странице видна шапка сайта")
+    public void headerVisibleTest() {
 
-        step("Открыть страницу регистрации", () -> {
+        step("Открыть главную страницу", () -> {
             registrationFormPage
                     .openPage()
                     .preparePage();
         });
 
-        step("Ввод номера телефона", () -> {
+        step("Проверить шапку сайта", () -> {
             registrationFormPage
-                    .openRegistrationForm()
-                    .typePhoneNumber(data.phoneNumber)
-                    .sendAuthCode();
-        });
-
-        step("Ввод неверного кода подтверждения", () -> {
-            registrationFormPage
-                    .checkEntryCodeText(SMS_SENT)
-                    .typeEntryCodeText(data.verifyCode);
-        });
-
-        step("Проверка наличия текста об ошибке", () -> {
-            registrationFormPage
-                    .checkInvalidEntryCodeMessage(ERROR_INVALID_CODE);
-        });
-
-    }
-
-    @Test
-    @DisplayName("Отправка пустой формы с email")
-    public void sendEmptyRegistrationFormWithEmailTest() {
-
-        step("Открыть страницу регистрации", () -> {
-            registrationFormPage
-                    .openPage()
-                    .preparePage();
-        });
-
-        step("Открытие старого способа авторизации", () -> {
-            registrationFormPage
-                    .openRegistrationForm()
-                    .openAuthOldModal()
-                    .checkCorrectMessageInOldModal(OLD_MODAL_TITLE)
-                    .clickSubmitBtn();
-        });
-
-        step("Проверка наличия текста об ошибке", () -> {
-            registrationFormPage
-                    .checkErrorMessageInOldModal(ERROR_EMPTY_LOGIN);
-        });
-
-    }
-
-    @Test
-    @DisplayName("Отправка невалидного телефона или email через кнопку")
-    public void sendInvalidLoginlWithSubmitButtonTest() {
-        TestData data = new TestData();
-
-        step("Открыть страницу регистрации", () -> {
-            registrationFormPage
-                    .openPage()
-                    .preparePage();
-        });
-
-        step("Открытие старого способа авторизации", () -> {
-            registrationFormPage
-                    .openRegistrationForm()
-                    .openAuthOldModal()
-                    .checkCorrectMessageInOldModal(OLD_MODAL_TITLE)
-                    .typeWrongLogin(data.wrongLogin)
-                    .typeAuthPassword(data.wrongPassword)
-                    .clickSubmitBtn();
-        });
-
-        step("Проверка наличия текста об ошибке", () -> {
-            registrationFormPage
-                    .checkErrorMessageInOldModalInvalidLogin(ERROR_INVALID_LOGIN);
+                    .checkHeaderVisible();
         });
     }
 
     @Test
-    @DisplayName("Отправка невалидного телефона или email через клавишу Enter")
-    public void sendInvalidPhoneOrEmailWithEnterTest() {
-        TestData data = new TestData();
+    @DisplayName("На главной странице есть meta description")
+    public void metaDescriptionTest() {
 
-        step("Открыть страницу регистрации", () -> {
+        step("Открыть главную страницу", () -> {
             registrationFormPage
                     .openPage()
                     .preparePage();
         });
 
-        step("Открытие старого способа авторизации", () -> {
+        step("Проверить description страницы", () -> {
             registrationFormPage
-                    .openRegistrationForm()
-                    .openAuthOldModal()
-                    .checkCorrectMessageInOldModal(OLD_MODAL_TITLE)
-                    .typeWrongLogin(data.wrongLogin)
-                    .typeAuthPasswordWithEnter(data.wrongPassword);
+                    .checkMetaDescription(META_DESCRIPTION);
+        });
+    }
+
+    @Test
+    @DisplayName("Поле поиска содержит плейсхолдер")
+    public void searchPlaceholderTest() {
+
+        step("Открыть главную страницу", () -> {
+            registrationFormPage
+                    .openPage()
+                    .preparePage();
         });
 
-        step("Проверка наличия текста об ошибке", () -> {
+        step("Проверить поле поиска", () -> {
             registrationFormPage
-                    .checkErrorMessageInOldModalInvalidLogin(ERROR_INVALID_LOGIN);
+                    .checkSearchPlaceholder(SEARCH_PLACEHOLDER);
+        });
+    }
+
+    @Test
+    @DisplayName("В шапке есть разделы Каталог и Аптеки")
+    public void headerContainsCatalogAndPharmaciesTest() {
+
+        step("Открыть главную страницу", () -> {
+            registrationFormPage
+                    .openPage()
+                    .preparePage();
+        });
+
+        step("Проверить тексты в шапке", () -> {
+            registrationFormPage
+                    .checkHeaderContainsText(CATALOG_TEXT)
+                    .checkHeaderContainsText(PHARMACIES_TEXT);
+        });
+    }
+
+    @Test
+    @DisplayName("В шапке есть ссылка на программу лояльности")
+    public void loyaltyLinkTest() {
+
+        step("Открыть главную страницу", () -> {
+            registrationFormPage
+                    .openPage()
+                    .preparePage();
+        });
+
+        step("Проверить ссылку программы лояльности", () -> {
+            registrationFormPage
+                    .checkLoyaltyLink();
+        });
+    }
+
+    @Test
+    @DisplayName("На странице есть телефон горячей линии")
+    public void hotlinePhoneTest() {
+
+        step("Открыть главную страницу", () -> {
+            registrationFormPage
+                    .openPage()
+                    .preparePage();
+        });
+
+        step("Проверить телефон горячей линии", () -> {
+            registrationFormPage
+                    .checkHotlinePhone();
+        });
+    }
+
+    @Test
+    @DisplayName("На странице есть ссылка обратной связи по сайту")
+    public void feedbackSiteLinkTest() {
+
+        step("Открыть главную страницу", () -> {
+            registrationFormPage
+                    .openPage()
+                    .preparePage();
+        });
+
+        step("Проверить ссылку обратной связи", () -> {
+            registrationFormPage
+                    .checkFeedbackSiteLink();
         });
     }
 
@@ -149,11 +146,6 @@ public class RegistrationFormTests extends TestBase {
             registrationFormPage
                     .openPage()
                     .preparePage();
-        });
-
-        step("Работа с формой регистрации", () -> {
-            registrationFormPage
-                    .openRegistrationForm();
         });
 
         step("Проверка наличия ссылки на правила сайта", () -> {
@@ -170,24 +162,10 @@ public class RegistrationFormTests extends TestBase {
     @DisplayName("Открыть правила сайта")
     public void openStolichkiPageRulesTest() {
 
-        step("Открыть страницу регистрации", () -> {
+        step("Открыть страницу правил сайта", () -> {
             registrationFormPage
-                    .openPage()
+                    .openSiteRulesPage()
                     .preparePage();
-        });
-
-        step("Работа с формой регистрации", () -> {
-            registrationFormPage
-                    .openRegistrationForm();
-        });
-
-        step("Проверка наличия ссылки на правила сайта", () -> {
-            registrationFormPage
-                    .checkPageRulesUrl(
-                            "href",
-                            PAGE_RULES_URL
-                    )
-                    .openPageRulesUrl();
         });
 
         step("Проверка перехода на страницу с правилами и наличия текста заголовка", () -> {
