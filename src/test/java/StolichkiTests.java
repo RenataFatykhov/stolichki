@@ -1,26 +1,26 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pages.RegistrationFormPage;
+import pages.MainPage;
 
 import static com.codeborne.selenide.logevents.SelenideLogger.step;
 import static testdata.TestData.*;
 
-public class RegistrationFormTests extends TestBase {
+public class StolichkiTests extends TestBase {
 
-    RegistrationFormPage registrationFormPage = new RegistrationFormPage();
+    MainPage mainPage = new MainPage();
 
     @Test
     @DisplayName("Открывается главная страница")
     public void openHomePageTest() {
 
         step("Открыть главную страницу", () -> {
-            registrationFormPage
+            mainPage
                     .openPage()
                     .preparePage();
         });
 
         step("Проверить title страницы", () -> {
-            registrationFormPage
+            mainPage
                     .checkTitle(HOME_TITLE);
         });
     }
@@ -30,13 +30,13 @@ public class RegistrationFormTests extends TestBase {
     public void headerVisibleTest() {
 
         step("Открыть главную страницу", () -> {
-            registrationFormPage
+            mainPage
                     .openPage()
                     .preparePage();
         });
 
         step("Проверить шапку сайта", () -> {
-            registrationFormPage
+            mainPage
                     .checkHeaderVisible();
         });
     }
@@ -46,13 +46,13 @@ public class RegistrationFormTests extends TestBase {
     public void metaDescriptionTest() {
 
         step("Открыть главную страницу", () -> {
-            registrationFormPage
+            mainPage
                     .openPage()
                     .preparePage();
         });
 
         step("Проверить description страницы", () -> {
-            registrationFormPage
+            mainPage
                     .checkMetaDescription(META_DESCRIPTION);
         });
     }
@@ -62,13 +62,13 @@ public class RegistrationFormTests extends TestBase {
     public void searchPlaceholderTest() {
 
         step("Открыть главную страницу", () -> {
-            registrationFormPage
+            mainPage
                     .openPage()
                     .preparePage();
         });
 
         step("Проверить поле поиска", () -> {
-            registrationFormPage
+            mainPage
                     .checkSearchPlaceholder(SEARCH_PLACEHOLDER);
         });
     }
@@ -78,13 +78,13 @@ public class RegistrationFormTests extends TestBase {
     public void headerContainsCatalogAndPharmaciesTest() {
 
         step("Открыть главную страницу", () -> {
-            registrationFormPage
+            mainPage
                     .openPage()
                     .preparePage();
         });
 
         step("Проверить тексты в шапке", () -> {
-            registrationFormPage
+            mainPage
                     .checkHeaderContainsText(CATALOG_TEXT)
                     .checkHeaderContainsText(PHARMACIES_TEXT);
         });
@@ -95,13 +95,13 @@ public class RegistrationFormTests extends TestBase {
     public void loyaltyLinkTest() {
 
         step("Открыть главную страницу", () -> {
-            registrationFormPage
+            mainPage
                     .openPage()
                     .preparePage();
         });
 
         step("Проверить ссылку программы лояльности", () -> {
-            registrationFormPage
+            mainPage
                     .checkLoyaltyLink();
         });
     }
@@ -111,13 +111,13 @@ public class RegistrationFormTests extends TestBase {
     public void hotlinePhoneTest() {
 
         step("Открыть главную страницу", () -> {
-            registrationFormPage
+            mainPage
                     .openPage()
                     .preparePage();
         });
 
         step("Проверить телефон горячей линии", () -> {
-            registrationFormPage
+            mainPage
                     .checkHotlinePhone();
         });
     }
@@ -127,13 +127,13 @@ public class RegistrationFormTests extends TestBase {
     public void feedbackSiteLinkTest() {
 
         step("Открыть главную страницу", () -> {
-            registrationFormPage
+            mainPage
                     .openPage()
                     .preparePage();
         });
 
         step("Проверить ссылку обратной связи", () -> {
-            registrationFormPage
+            mainPage
                     .checkFeedbackSiteLink();
         });
     }
@@ -143,13 +143,13 @@ public class RegistrationFormTests extends TestBase {
     public void checkUrlStolichkiPageRulesTest() {
 
         step("Открыть страницу регистрации", () -> {
-            registrationFormPage
+            mainPage
                     .openPage()
                     .preparePage();
         });
 
         step("Проверка наличия ссылки на правила сайта", () -> {
-            registrationFormPage
+            mainPage
                     .checkPageRulesUrl(
                             "href",
                             PAGE_RULES_URL
@@ -163,13 +163,13 @@ public class RegistrationFormTests extends TestBase {
     public void openStolichkiPageRulesTest() {
 
         step("Открыть страницу правил сайта", () -> {
-            registrationFormPage
+            mainPage
                     .openSiteRulesPage()
                     .preparePage();
         });
 
         step("Проверка перехода на страницу с правилами и наличия текста заголовка", () -> {
-            registrationFormPage
+            mainPage
                     .checkPageRulesOpen(PAGE_RULES_FULL_URL)
                     .checkPageRulesContent(PAGE_RULES_TITLE);
         });
