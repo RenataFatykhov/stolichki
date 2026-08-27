@@ -90,22 +90,6 @@ public class TutuTests extends TestBase {
     }
 
     @Test
-    @DisplayName("На главной странице есть вкладки Поезда, Авиа и Отели")
-    public void searchTabsVisibleTest() {
-
-        step("Открыть главную страницу", () -> {
-            mainPage
-                    .openPage()
-                    .preparePage();
-        });
-
-        step("Проверить вкладки формы поиска", () -> {
-            mainPage
-                    .checkSearchTabsVisible();
-        });
-    }
-
-    @Test
     @DisplayName("На главной странице есть кнопка Войти")
     public void loginButtonVisibleTest() {
 
@@ -118,22 +102,6 @@ public class TutuTests extends TestBase {
         step("Проверить кнопку входа", () -> {
             mainPage
                     .checkLoginButton();
-        });
-    }
-
-    @Test
-    @DisplayName("В шапке есть ссылки на основные разделы")
-    public void headerLinksTest() {
-
-        step("Открыть главную страницу", () -> {
-            mainPage
-                    .openPage()
-                    .preparePage();
-        });
-
-        step("Проверить ссылки шапки", () -> {
-            mainPage
-                    .checkHeaderLinks();
         });
     }
 

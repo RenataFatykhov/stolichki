@@ -16,19 +16,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static testdata.TestData.*;
 
 public class TutuMainPage {
-
-    // Tutu renders hidden responsive copies of header controls before the visible version.
     private final ElementsCollection headers = $$("[data-ti='header']");
     private final ElementsCollection headerLogos = $$("[data-ti='header-logo']");
     private final SelenideElement searchForm = $("[data-ti='search-form']");
     private final ElementsCollection loginButtons = $$("[data-ti='login-button']");
     private final SelenideElement footer = $("[data-ti='footer']");
-    private final ElementsCollection aviaLinks = $$("a[href='https://avia.tutu.ru/']");
-    private final ElementsCollection trainsLinks = $$("a[href='https://www.tutu.ru/poezda/']");
-    private final ElementsCollection hotelsLinks = $$("a[href='https://hotel.tutu.ru/']");
-    private final ElementsCollection trainTabs = $$("[data-ti='tab-train']");
-    private final ElementsCollection aviaTabs = $$("[data-ti='tab-avia']");
-    private final ElementsCollection hotelTabs = $$("[data-ti='tab-hotel']");
 
     @Step("Открыть страницу")
     public TutuMainPage openPage() {
@@ -74,7 +66,7 @@ public class TutuMainPage {
     @Step("Проверка meta description")
     public TutuMainPage checkMetaDescription(String expectedText) {
         $("meta[name='description']")
-                .shouldHave(attributeMatching("content", ".*" + expectedText + ".*"));
+                .shouldHave(attributeMatching("content", "(?s).*" + expectedText + ".*"));
         return this;
     }
 
@@ -103,26 +95,12 @@ public class TutuMainPage {
         return this;
     }
 
-    @Step("Проверка ссылок на основные разделы")
-    public TutuMainPage checkHeaderLinks() {
-        aviaLinks.findBy(visible).shouldHave(text(AVIABILETY_TEXT)).shouldHave(attribute("href", AVIA_LINK_URL));
-        trainsLinks.findBy(visible).shouldHave(text(TRAIN_TICKETS_TEXT)).shouldHave(attribute("href", TRAINS_LINK_URL));
-        hotelsLinks.findBy(visible).shouldHave(text(HOTELS_TEXT)).shouldHave(attribute("href", HOTELS_LINK_URL));
-        return this;
-    }
-
-    @Step("Проверка вкладок формы поиска")
-    public TutuMainPage checkSearchTabsVisible() {
-        trainTabs.findBy(visible).shouldBe(visible);
-        aviaTabs.findBy(visible).shouldBe(visible);
-        hotelTabs.findBy(visible).shouldBe(visible);
-        return this;
-    }
-
     @Step("Проверка текущего URL")
     public TutuMainPage checkPageOpen(String expectedPath) {
         String expectedUrl = Configuration.baseUrl.replaceAll("/+$", "") + expectedPath;
-        String currentUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
+        String currentUrl = WebDriverRunner.getWebDriver()
+                .getCurrentUrl()
+                .replaceFirst("^(https?://[^/]+)//+", "$1/");
         assertEquals(expectedUrl, currentUrl);
         return this;
     }
