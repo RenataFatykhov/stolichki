@@ -18,7 +18,7 @@ public class TestBase {
         Configuration.browser = System.getProperty("browser", "chrome");
         Configuration.browserVersion = System.getProperty("browserVersion", "148.0");
         Configuration.browserSize = System.getProperty("browserSize");
-        Configuration.baseUrl = System.getProperty("baseUrl");
+        Configuration.baseUrl = System.getProperty("baseUrl", "https://www.tutu.ru/");
         Configuration.remote = System.getProperty("remote");
 
         DesiredCapabilities capabilities = new DesiredCapabilities();

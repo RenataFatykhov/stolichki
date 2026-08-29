@@ -2,7 +2,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.TutuMainPage;
 
-import static com.codeborne.selenide.logevents.SelenideLogger.step;
 import static testdata.TestData.*;
 
 public class TutuTests extends TestBase {
@@ -12,163 +11,103 @@ public class TutuTests extends TestBase {
     @Test
     @DisplayName("Открывается главная страница")
     public void openHomePageTest() {
-
-        step("Открыть главную страницу", () -> {
-            mainPage
-                    .openPage()
-                    .preparePage();
-        });
-
-        step("Проверить URL главной страницы", () -> {
-            mainPage
-                    .checkPageOpen("/");
-        });
+        mainPage
+                .openPage()
+                .preparePage()
+                .checkPageOpen("/");
     }
 
     @Test
     @DisplayName("На главной странице видна шапка сайта")
     public void headerVisibleTest() {
+        mainPage
+                .openPage()
+                .preparePage()
+                .checkHeaderVisible();
 
-        step("Открыть главную страницу", () -> {
-            mainPage
-                    .openPage()
-                    .preparePage();
-        });
-
-        step("Проверить шапку сайта", () -> {
-            mainPage
-                    .checkHeaderVisible();
-        });
     }
 
     @Test
     @DisplayName("На главной странице есть meta description")
     public void metaDescriptionTest() {
+        mainPage
+                .openPage()
+                .preparePage()
+                .checkMetaDescription(META_DESCRIPTION);
 
-        step("Открыть главную страницу", () -> {
-            mainPage
-                    .openPage()
-                    .preparePage();
-        });
-
-        step("Проверить description страницы", () -> {
-            mainPage
-                    .checkMetaDescription(META_DESCRIPTION);
-        });
     }
 
     @Test
     @DisplayName("На главной странице виден логотип")
     public void headerLogoTest() {
 
-        step("Открыть главную страницу", () -> {
-            mainPage
-                    .openPage()
-                    .preparePage();
-        });
+        mainPage
+                .openPage()
+                .preparePage()
+                .checkHeaderLogo();
 
-        step("Проверить логотип", () -> {
-            mainPage
-                    .checkHeaderLogo();
-        });
     }
 
     @Test
     @DisplayName("На главной странице видна форма поиска")
     public void searchFormVisibleTest() {
+        mainPage
+                .openPage()
+                .preparePage()
+                .checkSearchFormVisible();
 
-        step("Открыть главную страницу", () -> {
-            mainPage
-                    .openPage()
-                    .preparePage();
-        });
-
-        step("Проверить форму поиска", () -> {
-            mainPage
-                    .checkSearchFormVisible();
-        });
     }
 
     @Test
     @DisplayName("На главной странице есть кнопка Войти")
     public void loginButtonVisibleTest() {
+        mainPage
+                .openPage()
+                .preparePage()
+                .checkLoginButton();
 
-        step("Открыть главную страницу", () -> {
-            mainPage
-                    .openPage()
-                    .preparePage();
-        });
-
-        step("Проверить кнопку входа", () -> {
-            mainPage
-                    .checkLoginButton();
-        });
     }
 
     @Test
     @DisplayName("На главной странице виден футер")
     public void footerVisibleTest() {
+        mainPage
+                .openPage()
+                .preparePage()
+                .checkFooterVisible();
 
-        step("Открыть главную страницу", () -> {
-            mainPage
-                    .openPage()
-                    .preparePage();
-        });
-
-        step("Проверить футер", () -> {
-            mainPage
-                    .checkFooterVisible();
-        });
     }
 
     @Test
     @DisplayName("Открывается страница справочной")
     public void openHelpPageTest() {
+        mainPage
+                .openHelpPage()
+                .preparePage()
+                .checkPageOpen(HELP_PAGE_URL)
+                .checkTitle(HELP_PAGE_TITLE);
 
-        step("Открыть страницу справочной", () -> {
-            mainPage
-                    .openHelpPage()
-                    .preparePage();
-        });
-
-        step("Проверить URL и заголовок страницы", () -> {
-            mainPage
-                    .checkPageOpen(HELP_PAGE_URL)
-                    .checkTitle(HELP_PAGE_TITLE);
-        });
     }
 
     @Test
     @DisplayName("Открывается страница путеводителя")
     public void openGuidePageTest() {
+        mainPage
+                .openGuidePage()
+                .preparePage()
+                .checkPageOpen(GUIDE_PAGE_URL)
+                .checkTitle(GUIDE_PAGE_TITLE);
 
-        step("Открыть страницу путеводителя", () -> {
-            mainPage
-                    .openGuidePage()
-                    .preparePage();
-        });
-
-        step("Проверить URL и текст на странице", () -> {
-            mainPage
-                    .checkPageOpen(GUIDE_PAGE_URL)
-                    .checkTitle(GUIDE_PAGE_TITLE);
-        });
     }
 
     @Test
     @DisplayName("Открывается страница ЖД билетов")
     public void openTrainsPageTest() {
+        mainPage
+                .openTrainsPage()
+                .preparePage()
+                .checkPageOpen(TRAINS_PAGE_URL)
+                .checkTitle(TRAINS_PAGE_TITLE);
 
-        step("Открыть страницу ЖД билетов", () -> {
-            mainPage
-                    .openTrainsPage()
-                    .preparePage();
-        });
-
-        step("Проверить URL и заголовок страницы", () -> {
-            mainPage
-                    .checkPageOpen(TRAINS_PAGE_URL)
-                    .checkTitle(TRAINS_PAGE_TITLE);
-        });
     }
 }

@@ -67,6 +67,20 @@ flowchart LR
 | --- | --- | --- | --- |
 | 10 | 10 | 100 % | 00:01:47 |
 
+### Jenkins
+
+Тесты запускаются в [Jenkins job `tutu`](https://jenkins.qa.guru/job/tutu/). Jenkins собирает проект из GitHub, запускает тесты в Selenoid и публикует артефакты Allure Report и Allure TestOps.
+
+![Успешный запуск Jenkins job](docs/images/jenkins-job.png)
+
+### Allure Report
+
+Allure-отчёт содержит общую статистику, историю запусков, список тестов и детализацию каждого сценария с шагами выполнения и вложениями.
+
+![Сводка Allure Report](docs/images/allure-overview.png)
+
+![Список тестов в Allure Report](docs/images/allure-suites.png)
+
 ## Интеграции
 
 ### Telegram
