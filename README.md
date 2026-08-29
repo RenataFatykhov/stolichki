@@ -91,7 +91,9 @@ Allure-отчёт содержит общую статистику, истори
 
 Запись удалённого запуска сценария «На главной странице видна форма поиска» в Chrome через Selenoid.
 
-[▶ Открыть видео прохождения теста](docs/images/search-form-test-run.mp4)
+![GIF-запись прохождения теста](docs/images/search-form-test-run.gif)
+
+[Открыть видео в формате MP4](docs/images/search-form-test-run.mp4)
 
 ## Интеграции
 
