@@ -18,14 +18,16 @@ flowchart LR
 
 ## Технологии
 
-- Java 21
-- Gradle
-- JUnit 5
-- Selenide
-- Allure Report
-- Jenkins
-- Allure TestOps
-- Jira
+<p align="left">
+  <a href="https://www.oracle.com/java/"><img src="https://img.shields.io/badge/Java_21-ED8B00?style=for-the-badge&amp;logo=openjdk&amp;logoColor=white" alt="Java 21"></a>
+  <a href="https://gradle.org/"><img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&amp;logo=gradle&amp;logoColor=white" alt="Gradle"></a>
+  <a href="https://junit.org/junit5/"><img src="https://img.shields.io/badge/JUnit_5-25A162?style=for-the-badge&amp;logo=junit5&amp;logoColor=white" alt="JUnit 5"></a>
+  <a href="https://selenide.org/"><img src="https://img.shields.io/badge/Selenide-43B02A?style=for-the-badge&amp;logo=selenium&amp;logoColor=white" alt="Selenide"></a>
+  <a href="https://allurereport.org/"><img src="https://img.shields.io/badge/Allure_Report-FF6B35?style=for-the-badge&amp;logo=allure&amp;logoColor=white" alt="Allure Report"></a>
+  <a href="https://www.jenkins.io/"><img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&amp;logo=jenkins&amp;logoColor=white" alt="Jenkins"></a>
+  <a href="https://allurereport.org/allure-testops/"><img src="https://img.shields.io/badge/Allure_TestOps-FF6B35?style=for-the-badge&amp;logo=allure&amp;logoColor=white" alt="Allure TestOps"></a>
+  <a href="https://www.atlassian.com/software/jira"><img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&amp;logo=jira&amp;logoColor=white" alt="Jira"></a>
+</p>
 
 ## Тест-кейсы
 
