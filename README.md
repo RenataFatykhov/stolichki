@@ -1,6 +1,10 @@
-# Автотесты для Tutu.ru
+<h1 align="center">Автотесты для Tutu.ru</h1>
 
-Учебный проект с UI-автотестами для сайта [Tutu.ru](https://www.tutu.ru/). Тесты написаны на Java с использованием Selenide и JUnit 5; результаты формируются в Allure Report.
+<h2 align="center">Учебный проект с UI-автотестами для сайта <a href="https://www.tutu.ru/">Tutu.ru</a>. Тесты написаны на Java с использованием Selenide и JUnit 5; результаты формируются в Allure Report.</h2>
+
+<p align="center">
+  <a href="https://www.tutu.ru/"><img src="docs/images/tutu-logo.svg" width="100" alt="Логотип Tutu.ru"></a>
+</p>
 
 ## Схема проекта
 
